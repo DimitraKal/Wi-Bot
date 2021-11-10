@@ -158,6 +158,22 @@ class ActionAnnouncementPerCat(Action):
         return []
 
 
+class ActionCourses(Action):
+    def name(self) -> Text:
+        return "action_courses"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        semester = next(tracker.get_latest_entity_values('semester'), None)
+        if str(semester) == '1' or str(semester) == 'χειμερινό':
+            dispatcher.utter_message(response="utter_courses_1")
+            dispatcher.utter_message(response="utter_help_new")
+        elif str(semester) == '2' or str(semester) == 'εαρινό':
+            dispatcher.utter_message(response="utter_courses_2")
+            dispatcher.utter_message(response="utter_help_new")
+
+        return []
+
+
 # class ActionCheckAmExams(Action):
 #    def name(self) -> Text:
 #        return "action_check_am_exams"
@@ -206,18 +222,3 @@ class ActionAnnouncementPerCat(Action):
 #            strg = 'κάτι πήγε στραβά :/'
 #            dispatcher.utter_message(strg)
 #        return []
-
-class ActionCourses(Action):
-    def name(self) -> Text:
-        return "action_courses"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        semester = next(tracker.get_latest_entity_values('semester'), None)
-        if str(semester) == '1' or str(semester) == 'χειμερινό':
-            dispatcher.utter_message(response="utter_courses_1")
-            dispatcher.utter_message(response="utter_help_new")
-        elif str(semester) == '2' or str(semester) == 'εαρινό':
-            dispatcher.utter_message(response="utter_courses_2")
-            dispatcher.utter_message(response="utter_help_new")
-
-        return []
