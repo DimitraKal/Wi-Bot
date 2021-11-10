@@ -1,0 +1,159 @@
+version: "2.0"
+
+stories:
+
+- story:  courses_story
+  steps:
+  - intent: greet
+  - action: utter_intro1
+  - action: utter_help
+  #- action: utter_question_continue2
+  - intent: courses
+  - action: utter_ask_courses
+  - intent: semester
+  - action: action_courses
+
+- story:  contactInfo_story
+  steps:
+  - intent: greet
+  - action: utter_intro1
+  - action: utter_help
+  - intent: contactInfo
+  - action: utter_ask_edu_code
+  - intent: my_edu_code
+  - action: action_check_am
+
+- story:  exams_story
+  steps:
+  - intent: greet
+  - action: utter_intro1
+  - action: utter_help
+  - intent: septemberExams
+  - action: action_check_am_exams
+
+- story:  min_courses_part_time
+  steps:
+  - intent: min_courses_part_time
+  - action: utter_min_courses_part_time
+
+- story:  contact_secretariat
+  steps:
+  - intent: contact_secretariat
+  - action: utter_contact_secretariat
+
+- story:  documents_application
+  steps:
+  - intent: documents_application
+  - action: utter_documents_application
+
+- story: elearning_platform
+  steps:
+  - intent: elearning_platform
+  - action: utter_elearning_platform
+
+- story: academicID_link
+  steps:
+  - intent: academicID_link
+  - action: utter_academicID_link
+
+- story: available_services
+  steps:
+  - intent: available_services
+  - action: utter_available_services
+
+- story: erasmus_info
+  steps:
+  - intent: erasmus_info
+  - action: utter_erasmus_info
+
+- story: graduation_info
+  steps:
+  - intent: graduation_info
+  - action: utter_graduation_info
+
+- story: access_university
+  steps:
+  - intent: access_university
+  - action: utter_access_university
+
+- story: teachers_list
+  steps:
+  - intent: teachers_list
+  - action: utter_teachers_list
+
+- story: affirm
+  steps:
+  - intent: affirm
+  - action: utter_help
+
+- story: deny
+  steps:
+  - intent: deny
+  - action: utter_bye
+
+- story:  thanks
+  steps:
+  - intent: thanks
+  - action: utter_help_new
+
+- story:  bye
+  steps:
+  - intent: bye
+  - action: utter_bye
+
+- story: announcements
+  steps:
+  - intent: announcements
+  - action: utter_question_announcements
+
+- story: announcements_all
+  steps:
+  - intent: announcements_all
+  - action: action_announcements_all
+
+- story: categories_announcements
+  steps:
+  - intent: category
+  - action: utter_category
+  - action: action_announcement_per_cat
+
+- story: people_ihu
+  steps:
+  - intent: people_ihu
+  - action: action_edu_people
+
+- story: professor_contact_info
+  steps:
+  - intent: professor_info
+  - action: utter_professor_info
+  - action: professor_form
+ # - active_loop: professor_form
+  - slot_was_set:
+    - requested_slot: professor_name
+  - slot_was_set:
+    - professor_name: Δήμητρα Καλομοίρη
+  - slot_was_set:
+    - professor_name: Καλομοίρη
+  #- active_loop: null
+  - action: action_professor_info
+
+- story: chatbot_info
+  steps:
+  - intent: chatbot_info
+  - action: utter_chatbot_info
+
+- story: year_program
+  steps:
+  - intent: year_program
+  - action: action_read_file
+
+- story: semester_program
+  steps:
+  - intent: semester_program
+  - action: action_read_file
+
+- story: info_university_department
+  steps:
+  - intent: info_university_department
+  - action: utter_info_university_department
+

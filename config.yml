@@ -1,0 +1,25 @@
+language: el
+pipeline:
+  - name: WhitespaceTokenizer #σπάει τις προτάσεις σε Tokens με βάση τα κενά
+  - name: RegexFeaturizer #βοηθάει στο intent classification κ entity extraction
+  - name: LexicalSyntacticFeaturizer #δημιουργεί λεξιλογικά και συντακτικά χαρακτηριστικά για υποστήριξη entity extraction
+  - name: CountVectorsFeaturizer  # δημιουργεί μια αναπαράσταση bag-of-words των μηνυμάτων του χρήστη,intents και responses
+    analyzer: "char_wb"
+    min_ngram: 1
+    max_ngram: 4
+  - name: DIETClassifier # για intent classification και entity extraction
+    epochs: 100
+    constrain_similarities: true
+    model_confidence: softmax
+  - name: EntitySynonymMapper # Αντιστοιχεί τιμές συνώνυμων οντοτήτων, στην ίδια τιμή
+
+
+policies:
+  - name: MemoizationPolicy
+  - name: TEDPolicy
+    max_history: 5
+    epochs: 100
+    constrain_similarities: true
+    model_confidence: softmax
+  - name: RulePolicy
+  #- name: FormPolicy
