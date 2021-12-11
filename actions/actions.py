@@ -1,8 +1,15 @@
-from typing import Any, Text, Dict, List
+from typing import Any, Text, Dict, List, Union
 
-from rasa_sdk import Action, Tracker
-from rasa_sdk.events import SlotSet
+from rasa_sdk import Action, Tracker, FormValidationAction
+from rasa_sdk.events import SlotSet, EventType
 from rasa_sdk.executor import CollectingDispatcher
+import re
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email_validator import validate_email, EmailNotValidError
+from rasa_sdk.forms import FormAction
+from datetime import datetime
+import dateutil.parser
 
 import announcements
 import categories
@@ -10,16 +17,53 @@ import eduPeople
 import sendEmail
 
 
+class EmailForm(FormAction):
+    def name(self) -> Text:
+        return "email_form"
+
+    @staticmethod
+    def required_slots(tracker: Tracker) -> List[Text]:
+        """A list of required slots that the form has to fill"""
+        return ["email"]
+
+    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+        return {
+
+            "email": [self.from_entity(entity="email"),
+                      self.from_text(intent="send_email")],
+        }
+
+    def validate_email(self, value, dispatcher, tracker, domain):
+
+        if any(tracker.get_latest_entity_values("email")):
+            try:
+                valid = validate_email(value)
+                email = valid.email
+                return {"email": value}
+            except EmailNotValidError as e:
+                dispatcher.utter_message(template="utter_no_email")
+                return {"email": None}
+
+        else:
+            # no entity was picked up, we want to ask again
+            dispatcher.utter_message(template="utter_no_email")
+            return {"email": None}
+
+
 class ActionSubmit(Action):
     def name(self) -> Text:
         return "action_submit"
 
     def run(self, dispatcher, tracker: Tracker, domain: "DomainDict", ) -> List[Dict[Text, Any]]:
-        sendEmail.send_email("wichatbotinfo@gmail.com", tracker.get_slot("email"), tracker.get_slot("subject"),
-                             tracker.get_slot("message"))
-        dispatcher.utter_message(
-            "Το email έχει αποσταλεί στην διεύθυνση: {}".format(tracker.get_slot("email")))
-        dispatcher.utter_message(response="utter_help_new")
+        smail = sendEmail.send_email("wichatbotinfo@gmail.com", tracker.get_slot("email"), tracker.get_slot("subject"),
+                                     tracker.get_slot("message"))
+        if smail:
+            SlotSet("email", None)
+            dispatcher.utter_message(smail)
+        else:
+            dispatcher.utter_message(
+                "📭 Το email έχει αποσταλεί στην διεύθυνση: {}".format(tracker.get_slot("email")))
+
         return [SlotSet("email", None), SlotSet("subject", None), SlotSet("message", None)]
 
 
@@ -54,14 +98,11 @@ class ActionProfessorInfo(Action):
         professor_name = tracker.get_slot('professor_name')
         print("professor: ", professor_name)
         professor = eduPeople.professor_info(professor_name)
-        dispatcher.utter_message(
-            professor["title;lang-el"] + ' - ' + professor[
-                "displayName;lang-el"])  # TODO: check for values !=0 || !=""
-        dispatcher.utter_message(professor["telephoneNumber"])
-        dispatcher.utter_message(image=professor["secondarymail"])  # TODO: base64 way to display
-        dispatcher.utter_message(professor["labeledURI"])
-        dispatcher.utter_message(professor["socialMedia"]["researchGate"])
-
+        dispatcher.utter_message(professor["title;lang-el"] + ' - ' + professor[
+            "displayName;lang-el"] + "  \n ☎️ " + professor["telephoneNumber"] + "  \n  🔗 " +
+                                 professor[
+                                     "labeledURI"] + "  \n " + professor["socialMedia"][
+                                     "researchGate"] + "  \n ", image=professor["secondarymail"])
         return [SlotSet("professor_name", None)]
 
 
@@ -77,11 +118,10 @@ class ActionEduPeople(Action):
 
         length = len(temp)
         for i in range(length):
-            dispatcher.utter_message(
-                temp[i]["title"] + ' - ' + temp[i]["name"] + ' - ' + temp[i][
-                    "telephoneNumber"])  # TODO: check for values !=0 || !=""
-            dispatcher.utter_message(image=temp[i]["mail"])  # TODO: base64 way to display
-            dispatcher.utter_message(temp[i]["Uri"])
+            dispatcher.utter_message('🎓 ' + temp[i]["title"] + " " +
+                                     temp[i]["name"] + '  \n ☎️ ' + temp[i][
+                                         "telephoneNumber"] + "  \n 🔗 " + temp[i][
+                                         "Uri"] + "  \n  ", image=temp[i]["mail"])
         return []
 
 
@@ -96,14 +136,16 @@ class ActionAnnouncementsApi(Action):
         temp = announcements.announcements()
 
         length = len(temp)
-        for i in range(length):
-            print(temp[i]["publisher"])
-            print(temp[i]["title"])
-            dispatcher.utter_message(temp[i]["publisher"])
-            dispatcher.utter_message(temp[i]["date"])
-            dispatcher.utter_message(format(temp[i]["title"]))
-            dispatcher.utter_message("https://apps.iee.ihu.gr/announcements/announcement/" + temp[i]["id"])
 
+        for i in range(length):
+            print(temp[i]["publisher"] + "τίτλος: " + temp[i]["title"])
+
+            dispatcher.utter_message(
+                format(temp[i]["title"]) + "  \n" + temp[i]["publisher"] + "  \n" + dateutil.parser.parse(
+                    temp[i]["date"]).strftime(
+                    '%m/%d/%Y') + "  \n 🔗" + "https://apps.iee.ihu.gr/announcements/announcement/" +
+                temp[i][
+                    "id"])
         return []
 
 
@@ -147,12 +189,14 @@ class ActionAnnouncementPerCat(Action):
             temp = announcements.announcements_category(category_id)
             length = len(temp)
             for i in range(length):
-                print(temp[i]["publisher"])
-                print(temp[i]["title"])
-                dispatcher.utter_message(temp[i]["publisher"])
-                dispatcher.utter_message(temp[i]["date"])
-                dispatcher.utter_message(format(temp[i]["title"]))
-                dispatcher.utter_message("https://apps.iee.ihu.gr/announcements/announcement/" + temp[i]["id"])
+                print(temp[i]["publisher"], temp[i]["title"])
+
+                dispatcher.utter_message(
+                    temp[i]["publisher"] + "  \n" + dateutil.parser.parse(temp[i]["date"]).strftime(
+                        '%m/%d/%Y') + "   \n " + format(
+                        temp[i]["title"]) + "  \n 🔗" + "https://apps.iee.ihu.gr/announcements/announcement/" +
+                    temp[i][
+                        "id"])
         else:
             print("No category id")
         return []
@@ -172,7 +216,6 @@ class ActionCourses(Action):
             dispatcher.utter_message(response="utter_help_new")
 
         return []
-
 
 # class ActionCheckAmExams(Action):
 #    def name(self) -> Text:

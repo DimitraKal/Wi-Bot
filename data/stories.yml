@@ -2,16 +2,31 @@ version: "2.0"
 
 stories:
 
-- story:  courses_story
+- story:  intro
   steps:
-  - intent: greet
+  - intent: intro
   - action: utter_intro1
   - action: utter_help
-  #- action: utter_question_continue2
+  - action: utter_ask_main_menu
+
+- story:  greet
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_ask_main_menu
+
+- story:  ok
+  steps:
+  - intent: ok
+  - action: utter_help
+
+- story:  courses_story
+  steps:
   - intent: courses
   - action: utter_ask_courses
   - intent: semester
   - action: action_courses
+  - action: utter_help_new
 
 - story:  contactInfo_story
   steps:
@@ -35,51 +50,71 @@ stories:
   steps:
   - intent: min_courses_part_time
   - action: utter_min_courses_part_time
+  - action: utter_help_new
 
 - story:  contact_secretariat
   steps:
   - intent: contact_secretariat
   - action: utter_contact_secretariat
+  - action: utter_help_new
 
 - story:  documents_application
   steps:
   - intent: documents_application
   - action: utter_documents_application
+  - action: utter_help_new
 
 - story: elearning_platform
   steps:
   - intent: elearning_platform
   - action: utter_elearning_platform
+  - action: utter_help_new
 
 - story: academicID_link
   steps:
   - intent: academicID_link
   - action: utter_academicID_link
+  - action: utter_help_new
 
 - story: available_services
   steps:
   - intent: available_services
   - action: utter_available_services
+  - action: utter_help_new
 
 - story: erasmus_info
   steps:
   - intent: erasmus_info
   - action: utter_erasmus_info
+  - action: utter_help_new
 
 - story: graduation_info
   steps:
   - intent: graduation_info
   - action: utter_graduation_info
+  - action: utter_help_new
 
 - story: access_university
   steps:
   - intent: access_university
   - action: utter_access_university
+  - action: utter_help_new
 
 - story: teachers_list
   steps:
   - intent: teachers_list
   - action: utter_teachers_list
+  - action: utter_help_new
+
+- story: submit_email
+  steps:
+  - intent: submit_email
+  - action: action_submit
+
+- story: cancel_email
+  steps:
+  - intent: cancel_email
+  - action: utter_help
 
 - story: affirm
   steps:
@@ -90,6 +125,11 @@ stories:
   steps:
   - intent: deny
   - action: utter_bye
+
+- story:  help_me
+  steps:
+  - intent: help
+  - action: utter_help
 
 - story:  thanks
   steps:
@@ -110,17 +150,22 @@ stories:
   steps:
   - intent: announcements_all
   - action: action_announcements_all
+  - action: utter_help_new
 
 - story: categories_announcements
   steps:
+  - intent: categories_announcements
+  - action: action_categories_all
   - intent: category
-  - action: utter_category
+ # - action: utter_category
   - action: action_announcement_per_cat
+  - action: utter_help_new
 
 - story: people_ihu
   steps:
   - intent: people_ihu
   - action: action_edu_people
+  - action: utter_help_new
 
 - story: professor_contact_info
   steps:
@@ -131,9 +176,9 @@ stories:
   - slot_was_set:
     - requested_slot: professor_name
   - slot_was_set:
-    - professor_name: Δήμητρα Καλομοίρη
+    - professor_name: Δήμητρα Παπά
   - slot_was_set:
-    - professor_name: Καλομοίρη
+    - professor_name: Παπά
   #- active_loop: null
   - action: action_professor_info
 
@@ -145,15 +190,31 @@ stories:
 - story: year_program
   steps:
   - intent: year_program
+  - action: utter_please_wait
   - action: action_read_file
+  - action: utter_help_new
 
 - story: semester_program
   steps:
   - intent: semester_program
+  - action: utter_please_wait
   - action: action_read_file
+  - action: utter_help_new
 
 - story: info_university_department
   steps:
   - intent: info_university_department
   - action: utter_info_university_department
+  - action: utter_help_new
+
+- story: bot_challange
+  steps:
+  - intent: out_of_scope
+  - action: action_default_fallback
+
+- story: menu_chatbot
+  steps:
+  - intent: menu
+  - action: utter_menu
+
 

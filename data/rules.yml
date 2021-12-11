@@ -17,7 +17,7 @@ rules:
   condition:
   - active_loop: email_form
   steps:
-  - action: utter_wait_message
+  #- action: utter_wait_message
   - action: email_form
   - active_loop: null
   - slot_was_set:
@@ -29,7 +29,10 @@ rules:
   - slot_was_set:
     - message: "Lorem ipsum dolor sit amet"
     - requested_slot: null
-  - action: action_submit
+  - action: utter_question_submit
+ # - action: action_submit
+
+#- rule: out of scope  steps:  - intent: nlu_fallback #out_of_scope  - action: utter_out_of_scope
 
 #- rule: Say goodbye anytime the user says goodbye
 #  steps:
