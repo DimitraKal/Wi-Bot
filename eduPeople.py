@@ -19,6 +19,7 @@ def edu_people():
     for item in data:
         try:
             store_details = {"title": None, "name": None, "telephoneNumber": None, "mail": None, "Uri": None}
+            # if item['secondarymail'] != "-" and item['telephoneNumber'] != "0":
 
             if item['title;lang-el'] != '-':
                 store_details['title'] = item['title;lang-el']

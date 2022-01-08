@@ -1,91 +1,229 @@
-#### This file contains tests to evaluate that your bot behaves as expected.
-#### If you want to learn more, please see the docs: https://rasa.com/docs/rasa/testing-your-assistant
-
 stories:
-- story: happy path 1
+- story: erasmus
   steps:
   - user: |
-      hello there!
+      γεια
     intent: greet
-  - action: utter_greet
+  - action: utter_help
   - user: |
-      amazing
-    intent: mood_great
-  - action: utter_happy
-
-- story: happy path 2
-  steps:
+      Θέλω να μου δώσεις πληροφορίες για το erasmus
+    intent: erasmus_info
+  - action: utter_erasmus_info
   - user: |
-      hello there!
-    intent: greet
-  - action: utter_greet
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
   - user: |
-      amazing
-    intent: mood_great
-  - action: utter_happy
-  - user: |
-      bye-bye!
-    intent: goodbye
-  - action: utter_goodbye
-
-- story: sad path 1
-  steps:
-  - user: |
-      hello
-    intent: greet
-  - action: utter_greet
-  - user: |
-      not good
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - user: |
-      yes
-    intent: affirm
-  - action: utter_happy
-
-- story: sad path 2
-  steps:
-  - user: |
-      hello
-    intent: greet
-  - action: utter_greet
-  - user: |
-      not good
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - user: |
-      not really
+      όχι
     intent: deny
-  - action: utter_goodbye
+  - action: utter_bye
 
-- story: sad path 3
+
+- story: academicID_link
   steps:
   - user: |
-      hi
+      γεια
     intent: greet
-  - action: utter_greet
+  - action: utter_help
   - user: |
-      very terrible
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
+      Θέλω να μου δώσεις πληροφορίες για την ακαδημαϊκή ταυτότητας
+    intent: academicID_link
+  - action: utter_academicID_link
   - user: |
-      no
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
+  - user: |
+      όχι
     intent: deny
-  - action: utter_goodbye
+  - action: utter_bye
 
-- story: say goodbye
+- story: min_courses_part_time
   steps:
   - user: |
-      bye-bye!
-    intent: goodbye
-  - action: utter_goodbye
+      γεια
+    intent: greet
+  - action: utter_help
+  - user: |
+      Θέλω να μου πεις πόσα είναι τα ελάχιστα μαθήματα στην μερική φοίτηση
+    intent: min_courses_part_time
+  - action: utter_min_courses_part_time
+  - user: |
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
+  - user: |
+      όχι
+    intent: deny
+  - action: utter_bye
 
-- story: bot challenge
+- story: contact_secretariat
   steps:
   - user: |
-      are you a bot?
-    intent: bot_challenge
-  - action: utter_iamabot
+      γεια
+    intent: greet
+  - action: utter_help
+  - user: |
+      πως μπορώ να επικοινωνήσω με την γραμματεία
+    intent: contact_secretariat
+  - action: utter_contact_secretariat
+  - user: |
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
+  - user: |
+      όχι
+    intent: deny
+  - action: utter_bye
+
+- story: documents_application
+  steps:
+  - user: |
+      γεια
+    intent: greet
+  - action: utter_help
+  - user: |
+      θέλω τα έγγραφα για την αίτηση εισαγωγής
+    intent: documents_application
+  - action: utter_documents_application
+  - user: |
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
+  - user: |
+      όχι
+    intent: deny
+  - action: utter_bye
+
+- story: elearning_platform
+  steps:
+  - user: |
+      γεια
+    intent: greet
+  - action: utter_help
+  - user: |
+      πλατφόρμα e-learning
+    intent: elearning_platform
+  - action: utter_elearning_platform
+  - user: |
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
+  - user: |
+      όχι
+    intent: deny
+  - action: utter_bye
+
+- story: available_services
+  steps:
+  - user: |
+      γεια
+    intent: greet
+  - action: utter_help
+  - user: |
+      ηλεκτρονικές υπηρεσίες
+    intent: available_services
+  - action: utter_available_services
+  - user: |
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
+  - user: |
+      όχι
+    intent: deny
+  - action: utter_bye
+
+- story: graduation_info
+  steps:
+  - user: |
+      γεια
+    intent: greet
+  - action: utter_help
+  - user: |
+      Διαδικασία ορκωμοσίας
+    intent: graduation_info
+  - action: utter_graduation_info
+  - user: |
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
+  - user: |
+      όχι
+    intent: deny
+  - action: utter_bye
+
+- story: access_university
+  steps:
+  - user: |
+      γεια
+    intent: greet
+  - action: utter_help
+  - user: |
+      πρόσβαση στην σχολή
+    intent: access_university
+  - action: utter_access_university
+  - user: |
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
+  - user: |
+      όχι
+    intent: deny
+  - action: utter_bye
+
+- story: teachers_list
+  steps:
+  - user: |
+      γεια
+    intent: greet
+  - action: utter_help
+  - user: |
+      τρόποι επικοινωνίας με τους διδάσκοντες
+    intent: teachers_list
+  - action: utter_teachers_list
+  - user: |
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
+  - user: |
+      όχι
+    intent: deny
+  - action: utter_bye
+
+- story: chatbot_info
+  steps:
+  - user: |
+      γεια
+    intent: greet
+  - action: utter_help
+  - user: |
+      τι πληροφορίες δίνεις
+    intent: chatbot_info
+  - action: utter_chatbot_info
+  - user: |
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
+  - user: |
+      όχι
+    intent: deny
+  - action: utter_bye
+
+- story: info_university_department
+  steps:
+  - user: |
+      γεια
+    intent: greet
+  - action: utter_help
+  - user: |
+      πληροφορίες για το τμήμα ή την σχολή
+    intent: info_university_department
+  - action: utter_info_university_department
+  - user: |
+      ευχαριστώ
+    intent: thanks
+  - action: utter_help_new
+  - user: |
+      όχι
+    intent: deny
+  - action: utter_bye

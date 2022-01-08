@@ -1,0 +1,65 @@
+[
+  {
+    "text": "72020",
+    "entities": [
+      {
+        "start": 0,
+        "end": 5,
+        "value": "72020",
+        "entity": "am"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "semester",
+        "start": 0,
+        "end": 5,
+        "confidence_entity": 0.7952980995178223,
+        "value": "72020",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "το αμ 72020",
+    "entities": [
+      {
+        "start": 6,
+        "end": 11,
+        "value": "72020",
+        "entity": "am"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "semester",
+        "start": 6,
+        "end": 11,
+        "confidence_entity": 0.682672381401062,
+        "value": "72020",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "το μητρώο μου είναι 72020",
+    "entities": [
+      {
+        "start": 20,
+        "end": 25,
+        "value": "72020",
+        "entity": "am"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "semester",
+        "start": 20,
+        "end": 25,
+        "confidence_entity": 0.5912367105484009,
+        "value": "72020",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  }
+]

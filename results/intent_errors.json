@@ -1,0 +1,10 @@
+[
+  {
+    "text": "72020",
+    "intent": "my_edu_code",
+    "intent_prediction": {
+      "name": "semester",
+      "confidence": 0.9462183713912964
+    }
+  }
+]

@@ -50,6 +50,14 @@ class EmailForm(FormAction):
             return {"email": None}
 
 
+class ActionResetEmailSlots(Action):
+    def name(self) -> Text:
+        return "action_reset_email_slots"
+
+    def run(self, dispatcher, tracker, domain):
+        return [SlotSet("email", None), SlotSet("subject", None), SlotSet("message", None)]
+
+
 class ActionSubmit(Action):
     def name(self) -> Text:
         return "action_submit"
@@ -67,19 +75,35 @@ class ActionSubmit(Action):
         return [SlotSet("email", None), SlotSet("subject", None), SlotSet("message", None)]
 
 
+class ActionStop(Action):
+    def name(self):
+        return "action_stop"
+
+    async def run(self, dispatcher, tracker, domain):
+        if tracker.latest_message['intent'].get('name') == "stop":
+            print("stop conversation")
+            dispatcher.utter_message(response="utter_help")
+
+        return []
+
+
 class ActionReadFile(Action):
     def name(self):
         return "action_read_file"
 
     async def run(self, dispatcher, tracker, domain):
-        if tracker.latest_message['intent'].get('name') == "semester_program":
-            file = "files/2021_22_Χειμ_Εξ_Εβδομαδιαίο_Πρόγραμμα.pdf"
-        elif tracker.latest_message['intent'].get('name') == "year_program":
-            file = "files/2021_22_Ακαδημαϊκό_Ημερολόγιο.pdf"
-        from tika import parser
 
-        parsed_pdf = parser.from_file(file)
-        data = parsed_pdf['content']
+        from tika import parser
+        if tracker.latest_message['intent'].get('name') == "semester_program":
+            file = "files/2021_22_Ακαδημαϊκό_Ημερολόγιο.pdf"
+            parsed_pdf = parser.from_file(file)
+            data = parsed_pdf['content']
+            data = data.replace("\n\n", "\n\r")
+        elif tracker.latest_message['intent'].get('name') == "year_program":
+            file = "files/2021_22_Χειμ_Εξ_Εβδομαδιαίο_Πρόγραμμα.pdf"
+            parsed_pdf = parser.from_file(file)
+            data = parsed_pdf['content']
+            data = data.replace("\n\n", "\n")
 
         dispatcher.utter_message(data)
         return []
@@ -118,7 +142,8 @@ class ActionEduPeople(Action):
 
         length = len(temp)
         for i in range(length):
-            dispatcher.utter_message('🎓 ' + temp[i]["title"] + " " +
+
+            dispatcher.utter_message('🎓 ' + temp[i]["title"] + " | " +
                                      temp[i]["name"] + '  \n ☎️ ' + temp[i][
                                          "telephoneNumber"] + "  \n 🔗 " + temp[i][
                                          "Uri"] + "  \n  ", image=temp[i]["mail"])
@@ -163,8 +188,6 @@ class ActionCategoriesAll(Action):
         for i in range(length):
             buttons.append(
                 {"title": temp[i]["name"], "payload": '/category{"category_id":"' + temp[i]["id"] + '"}'})
-        # buttons.append(
-        #     {"title": "Όλες", "payload": ''})
 
         message = "Παρακαλώ επιλέξτε μια από τις διαθέσιμες κατηγορίες: "
         dispatcher.utter_message(message, buttons=buttons)
@@ -208,12 +231,18 @@ class ActionCourses(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         semester = next(tracker.get_latest_entity_values('semester'), None)
-        if str(semester) == '1' or str(semester) == 'χειμερινό':
+        if str(semester) == '1' or str(semester) == '1ο' or str(semester) == 'χειμερινό':
             dispatcher.utter_message(response="utter_courses_1")
             dispatcher.utter_message(response="utter_help_new")
-        elif str(semester) == '2' or str(semester) == 'εαρινό':
+        elif str(semester) == '2' or str(semester) == '2ο' or str(semester) == 'εαρινό':
             dispatcher.utter_message(response="utter_courses_2")
             dispatcher.utter_message(response="utter_help_new")
+        elif str(semester) == '3' or str(semester) == '3ο' or str(semester) == 'τρίτο':
+            dispatcher.utter_message(response="utter_courses_3")
+            dispatcher.utter_message(response="utter_help_new")
+        else:
+            dispatcher.utter_message(text="Τα μεταπτυχιακό περιλαμβάνει τρία (3) διδακτικά εξάμηνα")
+            dispatcher.utter_message(response="utter_ask_courses")
 
         return []
 

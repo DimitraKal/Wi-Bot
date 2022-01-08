@@ -26,25 +26,26 @@ stories:
   - action: utter_ask_courses
   - intent: semester
   - action: action_courses
-  - action: utter_help_new
 
-- story:  contactInfo_story
-  steps:
-  - intent: greet
-  - action: utter_intro1
-  - action: utter_help
-  - intent: contactInfo
-  - action: utter_ask_edu_code
-  - intent: my_edu_code
-  - action: action_check_am
+# pilot project stories
 
-- story:  exams_story
-  steps:
-  - intent: greet
-  - action: utter_intro1
-  - action: utter_help
-  - intent: septemberExams
-  - action: action_check_am_exams
+#- story:  contactInfo_story
+#  steps:
+#  - intent: greet
+#  - action: utter_intro1
+#  - action: utter_help
+#  - intent: contactInfo
+#  - action: utter_ask_edu_code
+#  - intent: my_edu_code
+#  - action: action_check_am
+#
+#- story:  exams_story
+#  steps:
+#  - intent: greet
+#  - action: utter_intro1
+#  - action: utter_help
+#  - intent: septemberExams
+#  - action: action_check_am_exams
 
 - story:  min_courses_part_time
   steps:
@@ -63,6 +64,11 @@ stories:
   - intent: documents_application
   - action: utter_documents_application
   - action: utter_help_new
+
+- story:  courses_all
+  steps:
+  - intent: courses_all
+  - action: utter_courses_all
 
 - story: elearning_platform
   steps:
@@ -114,22 +120,40 @@ stories:
 - story: cancel_email
   steps:
   - intent: cancel_email
+  - action: action_reset_email_slots
   - action: utter_help
+
+- story: office_hours
+  steps:
+  - intent: office_hours
+  - action: utter_office_hours
+  - action: utter_help
+
+- story: stop
+  steps:
+  - intent: stop
+  - action: action_stop
 
 - story: affirm
   steps:
   - intent: affirm
-  - action: utter_help
+  - action: utter_ask_main_menu
 
 - story: deny
   steps:
   - intent: deny
   - action: utter_bye
 
+- story: deny_help
+  steps:
+  - intent: deny_help
+  - action: utter_deny_help
+
 - story:  help_me
   steps:
   - intent: help
   - action: utter_help
+  - action: utter_ask_main_menu
 
 - story:  thanks
   steps:
@@ -181,11 +205,13 @@ stories:
     - professor_name: Παπά
   #- active_loop: null
   - action: action_professor_info
+  - action: utter_help_new
 
 - story: chatbot_info
   steps:
   - intent: chatbot_info
   - action: utter_chatbot_info
+  - action: utter_ask_main_menu
 
 - story: year_program
   steps:
@@ -217,4 +243,20 @@ stories:
   - intent: menu
   - action: utter_menu
 
+- story: scholarship
+  steps:
+  - intent: scholarship
+  - action: utter_scholarship
+  - action: utter_help_new
 
+- story: submit_applications
+  steps:
+  - intent: submit_applications
+  - action: utter_submit_applications
+  - action: utter_help_new
+
+- story: registration_certificate
+  steps:
+  - intent: registration_certificate
+  - action: utter_registration_certificate
+  - action: utter_help_new
