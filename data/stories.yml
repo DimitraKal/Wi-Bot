@@ -1,5 +1,4 @@
 version: "2.0"
-
 stories:
 
 - story:  intro
@@ -38,7 +37,7 @@ stories:
 #  - action: utter_ask_edu_code
 #  - intent: my_edu_code
 #  - action: action_check_am
-#
+
 #- story:  exams_story
 #  steps:
 #  - intent: greet
@@ -69,6 +68,7 @@ stories:
   steps:
   - intent: courses_all
   - action: utter_courses_all
+  - action: utter_help_new
 
 - story: elearning_platform
   steps:
@@ -116,6 +116,11 @@ stories:
   steps:
   - intent: submit_email
   - action: action_submit
+
+- story: submit_email_with_file
+  steps:
+  - intent: submit_email_with_file
+  - action: action_submit_email_with_file
 
 - story: cancel_email
   steps:
@@ -218,14 +223,15 @@ stories:
   - intent: year_program
   - action: utter_please_wait
   - action: action_read_file
-  - action: utter_help_new
+ # - intent: send_email_with_file
+  #- action: utter_help_new
 
 - story: semester_program
   steps:
   - intent: semester_program
   - action: utter_please_wait
   - action: action_read_file
-  - action: utter_help_new
+ # - action: utter_help_new
 
 - story: info_university_department
   steps:

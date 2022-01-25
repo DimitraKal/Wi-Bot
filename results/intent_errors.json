@@ -1,10 +1,26 @@
 [
   {
-    "text": "72020",
-    "intent": "my_edu_code",
+    "text": "Θα ήθελα να μάθω ποια είναι τα μαθήματα για όλα τα εξάμηνο",
+    "intent": "courses_all",
     "intent_prediction": {
-      "name": "semester",
-      "confidence": 0.9462183713912964
+      "name": "courses",
+      "confidence": 0.49635905027389526
+    }
+  },
+  {
+    "text": "θέλω να στείλω email",
+    "intent": "send_email",
+    "intent_prediction": {
+      "name": "send_email_with_file",
+      "confidence": 0.40774646401405334
+    }
+  },
+  {
+    "text": "αποστολή pdf",
+    "intent": "submit_email_with_file",
+    "intent_prediction": {
+      "name": "send_email_with_file",
+      "confidence": 0.8442105054855347
     }
   }
 ]

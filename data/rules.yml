@@ -13,6 +13,26 @@ rules:
       - message: "Lorem ipsum dolor sit amet"
     - active_loop: email_form
 
+- rule: Activate Form Pdf
+  steps:
+    - intent: send_email_with_file
+    - action: email_form_with_file
+    - slot_was_set:
+      - email: "abc@something.com"
+    - active_loop: email_form_with_file
+
+- rule: Submit Form Pdf
+  condition:
+  - active_loop: email_form_with_file
+  steps:
+  #- action: utter_wait_message
+  - action: email_form_with_file
+  - active_loop: null
+  - slot_was_set:
+    - email: "abc@something.com"
+    - requested_slot: null
+  - action: utter_question_submit_with_file
+
 - rule: Submit Form
   condition:
   - active_loop: email_form

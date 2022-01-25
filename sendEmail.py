@@ -1,6 +1,56 @@
 import smtplib
+from email import encoders
+from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+
+def send_email_with_file(from_address, to_address, subject, message, file_to_send):
+    passw = "w3bInt3lB0t1"
+    msg = MIMEMultipart()
+
+    msg['From'] = from_address
+    msg['To'] = to_address
+
+    msg['Subject'] = subject
+    info = " \n\n Αυτό το email στάλθηκε μέσω του WiBot"
+    body = message + info
+    msg.attach(MIMEText(body, 'plain'))
+
+    # open the file to be sent
+    filename = file_to_send
+    attachment = open(filename, "rb")
+    #
+    # # instance of MIMEBase and named as p
+    p = MIMEBase('application', 'octet-stream')
+    #
+    # # To change the payload into encoded form
+    p.set_payload(attachment.read())
+    #
+    # # encode into base64
+    encoders.encode_base64(p)
+    #
+    p.add_header('Content-Disposition', 'attachment', filename=filename)
+
+    # p.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    #
+    # # attach the instance 'p' to instance 'msg'
+    msg.attach(p)
+
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+
+    s.starttls()
+
+    try:
+        s.login(from_address, passw)
+        text = msg.as_string()
+        s.sendmail(from_address, to_address, text)
+    except:
+        error = "Παρουσιάστηκε κάποιο σφάλμα..🤔"
+        print(error)
+        return error
+    finally:
+        s.quit()
 
 
 def send_email(from_address, to_address, subject, message):
@@ -13,27 +63,7 @@ def send_email(from_address, to_address, subject, message):
     msg['Subject'] = subject
     body = message
     msg.attach(MIMEText(body, 'plain'))
-
-    # open the file to be sent
-    # filename = "/home/ashish/Downloads/webinar_rasa2_0.png"
-    # attachment = open(filename, "rb")
-    #
-    # # instance of MIMEBase and named as p
-    # p = MIMEBase('application', 'octet-stream')
-    #
-    # # To change the payload into encoded form
-    # p.set_payload((attachment).read())
-    #
-    # # encode into base64
-    # encoders.encode_base64(p)
-    #
-    # p.add_header('Content-Disposition', "attachment; filename= %s" % filename)
-    #
-    # # attach the instance 'p' to instance 'msg'
-    # msg.attach(p)
-
     s = smtplib.SMTP('smtp.gmail.com', 587)
-
     s.starttls()
 
     try:

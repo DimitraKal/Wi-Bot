@@ -1,12 +1,146 @@
 version: "2.0"
 stories:
-- story: bot_challange (data\stories.yml)
-  steps:
-  - intent: out_of_scope
-  - action: action_default_fallback
-  - action: utter_ask_main_menu  # predicted: action_listen
-- story: greet (data\stories.yml)
+- story: teachers_list (.\tests\test_stories.yml)
   steps:
   - intent: greet
-  - action: utter_greet  # predicted: utter_intro1
-  - action: utter_ask_main_menu
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: teachers_list
+  - action: utter_teachers_list
+  - action: action_listen  # predicted: utter_help_new
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye
+- story: chatbot_info (.\tests\test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: chatbot_info  # predicted: info_university_department: τι πληροφορίες δίνεις
+  - action: utter_chatbot_info
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye
+- story: info_university_department (.\tests\test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: info_university_department
+  - action: utter_info_university_department
+  - action: action_listen  # predicted: utter_help_new
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye
+- story: erasmus (.\tests\test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: erasmus_info
+  - action: utter_erasmus_info
+  - action: action_listen  # predicted: utter_help_new
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye
+- story: academicID_link (.\tests\test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: academicID_link  # predicted: info_university_department: Θέλω να μου δώσεις πληροφορίες για την ακαδημαϊκή ταυτότητας
+  - action: utter_academicID_link
+  - action: action_listen  # predicted: utter_help_new
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye
+- story: min_courses_part_time (.\tests\test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: min_courses_part_time
+  - action: utter_min_courses_part_time
+  - action: action_listen  # predicted: utter_help_new
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye
+- story: contact_secretariat (.\tests\test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: contact_secretariat
+  - action: utter_contact_secretariat
+  - action: action_listen  # predicted: utter_help_new
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye
+- story: documents_application (.\tests\test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: documents_application
+  - action: utter_documents_application
+  - action: action_listen  # predicted: utter_help_new
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye
+- story: elearning_platform (.\tests\test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: elearning_platform
+  - action: utter_elearning_platform
+  - action: action_listen  # predicted: utter_help_new
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye
+- story: available_services (.\tests\test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: available_services
+  - action: utter_available_services
+  - action: action_listen  # predicted: utter_help_new
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye
+- story: graduation_info (.\tests\test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: graduation_info
+  - action: utter_graduation_info
+  - action: action_listen  # predicted: utter_help_new
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye
+- story: access_university (.\tests\test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_help  # predicted: utter_greet
+  - action: action_listen  # predicted: utter_ask_main_menu
+  - intent: access_university
+  - action: utter_access_university
+  - action: action_listen  # predicted: utter_help_new
+  - intent: thanks
+  - action: utter_help_new
+  - intent: deny
+  - action: utter_bye

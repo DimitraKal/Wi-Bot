@@ -14,7 +14,7 @@
         "entity": "semester",
         "start": 0,
         "end": 5,
-        "confidence_entity": 0.7952980995178223,
+        "confidence_entity": 0.7572565674781799,
         "value": "72020",
         "extractor": "DIETClassifier"
       }
@@ -35,7 +35,7 @@
         "entity": "semester",
         "start": 6,
         "end": 11,
-        "confidence_entity": 0.682672381401062,
+        "confidence_entity": 0.5761764049530029,
         "value": "72020",
         "extractor": "DIETClassifier"
       }
@@ -56,7 +56,7 @@
         "entity": "semester",
         "start": 20,
         "end": 25,
-        "confidence_entity": 0.5912367105484009,
+        "confidence_entity": 0.527519702911377,
         "value": "72020",
         "extractor": "DIETClassifier"
       }

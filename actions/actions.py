@@ -23,7 +23,6 @@ class EmailForm(FormAction):
 
     @staticmethod
     def required_slots(tracker: Tracker) -> List[Text]:
-        """A list of required slots that the form has to fill"""
         return ["email"]
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
@@ -71,20 +70,31 @@ class ActionSubmit(Action):
         else:
             dispatcher.utter_message(
                 "📭 Το email έχει αποσταλεί στην διεύθυνση: {}".format(tracker.get_slot("email")))
+            dispatcher.utter_message(response="utter_help_new")
 
         return [SlotSet("email", None), SlotSet("subject", None), SlotSet("message", None)]
 
 
-class ActionStop(Action):
-    def name(self):
-        return "action_stop"
+class ActionSubmitWithFile(Action):
+    def name(self) -> Text:
+        return "action_submit_email_with_file"
 
-    async def run(self, dispatcher, tracker, domain):
-        if tracker.latest_message['intent'].get('name') == "stop":
-            print("stop conversation")
-            dispatcher.utter_message(response="utter_help")
+    def run(self, dispatcher, tracker: Tracker, domain: "DomainDict", ) -> List[Dict[Text, Any]]:
+        subject = "Αρχείο Pdf"
+        message = "Παρακάτω θα βρείτε το σχετικό αρχείο"
+        if file_to_send:
+            smail = sendEmail.send_email_with_file("wichatbotinfo@gmail.com", tracker.get_slot("email"),
+                                                   subject, message, file_to_send)
 
-        return []
+        if smail:
+            SlotSet("email", None)
+            dispatcher.utter_message(smail)
+        else:
+            dispatcher.utter_message(
+                "📭 Το email έχει αποσταλεί στην διεύθυνση: {}".format(tracker.get_slot("email")))
+            dispatcher.utter_message(response="utter_help_new")
+
+        return [SlotSet("email", None)]
 
 
 class ActionReadFile(Action):
@@ -106,6 +116,14 @@ class ActionReadFile(Action):
             data = data.replace("\n\n", "\n")
 
         dispatcher.utter_message(data)
+        global file_to_send
+        file_to_send = file
+        message = "Θα ήθελες να σου στείλω με email το αντίστοιχο αρχείο;"
+        buttons = [{'title': "Ναι ✔",
+                    'payload': '/send_email_with_file'},
+                   {'title': "Όχι ✖",
+                    'payload': '/cancel_email'}]
+        dispatcher.utter_message(message, buttons=buttons)
         return []
 
 
@@ -142,7 +160,6 @@ class ActionEduPeople(Action):
 
         length = len(temp)
         for i in range(length):
-
             dispatcher.utter_message('🎓 ' + temp[i]["title"] + " | " +
                                      temp[i]["name"] + '  \n ☎️ ' + temp[i][
                                          "telephoneNumber"] + "  \n 🔗 " + temp[i][
