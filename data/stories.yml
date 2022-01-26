@@ -26,26 +26,6 @@ stories:
   - intent: semester
   - action: action_courses
 
-# pilot project stories
-
-#- story:  contactInfo_story
-#  steps:
-#  - intent: greet
-#  - action: utter_intro1
-#  - action: utter_help
-#  - intent: contactInfo
-#  - action: utter_ask_edu_code
-#  - intent: my_edu_code
-#  - action: action_check_am
-
-#- story:  exams_story
-#  steps:
-#  - intent: greet
-#  - action: utter_intro1
-#  - action: utter_help
-#  - intent: septemberExams
-#  - action: action_check_am_exams
-
 - story:  min_courses_part_time
   steps:
   - intent: min_courses_part_time
@@ -266,3 +246,23 @@ stories:
   - intent: registration_certificate
   - action: utter_registration_certificate
   - action: utter_help_new
+
+# pilot project stories
+
+#- story:  contactInfo_story
+#  steps:
+#  - intent: greet
+#  - action: utter_intro1
+#  - action: utter_help
+#  - intent: contactInfo
+#  - action: utter_ask_edu_code
+#  - intent: my_edu_code
+#  - action: action_check_am
+
+#- story:  exams_story
+#  steps:
+#  - intent: greet
+#  - action: utter_intro1
+#  - action: utter_help
+#  - intent: septemberExams
+#  - action: action_check_am_exams
