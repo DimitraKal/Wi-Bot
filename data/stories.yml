@@ -247,6 +247,12 @@ stories:
   - action: utter_registration_certificate
   - action: utter_help_new
 
+- story: student_affairs
+  steps:
+  - intent: student_affairs
+  - action: utter_student_affairs
+  - action: utter_help_new
+
 # pilot project stories
 
 #- story:  contactInfo_story

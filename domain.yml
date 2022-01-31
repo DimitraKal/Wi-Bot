@@ -52,6 +52,7 @@ intents:
 - deny_help
 - submit_email_with_file
 - send_email_with_file
+- student_affairs
 entities:
 #- am
 - category_id
@@ -187,6 +188,11 @@ responses:
        📧 email: info-msc@iee.ihu.gr και sec-msc@iee.ihu.gr  
        ☎️ τηλέφωνο επικοινωνίας: 2310013621  
        📍 διεύθυνση: Αλεξάνδρεια Πανεπιστημιούπολη, Σίνδος, Θεσσαλονίκη, TK: 57400
+  utter_student_affairs:
+  - text: 'Με το Τμήμα Φοιτητικής Μέριμνας μπορείτε να επικοινωνήσετε με  \n
+       📧 email: infositisi@the.ihu.gr   \n
+       ☎️ τηλέφωνο επικοινωνίας: 2310013667   \n
+       📍 διεύθυνση: Διεθνές Πανεπιστήμιο της Ελλάδος, Αλεξάνδρεια Πανεπιστημιούπολη, Σίνδος, Θεσσαλονίκη, TK: 57400'
   utter_documents_application:
   - text: |-
       Οι υποψήφιοι μεταπτυχιακοί θα πρέπει να υποβάλουν:  
