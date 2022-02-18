@@ -48,6 +48,6 @@ def professor_info(name):
     professor = requests.get(url, headers=headers)
     contact_info = professor.json()
 
-    print(contact_info[0])
+  #  print(contact_info[0])
 
     return contact_info[0]

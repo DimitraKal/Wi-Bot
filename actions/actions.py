@@ -113,7 +113,8 @@ class ActionReadFile(Action):
             file = "files/2021_22_Χειμ_Εξ_Εβδομαδιαίο_Πρόγραμμα.pdf"
             parsed_pdf = parser.from_file(file)
             data = parsed_pdf['content']
-            data = data.replace("\n\n", "\n")
+           #data = data.replace("\n\n", "\n")
+            data = data.replace("\n\n", "\n\r")
 
         dispatcher.utter_message(data)
         global file_to_send
@@ -185,7 +186,7 @@ class ActionAnnouncementsApi(Action):
             dispatcher.utter_message(
                 format(temp[i]["title"]) + "  \n" + temp[i]["publisher"] + "  \n" + dateutil.parser.parse(
                     temp[i]["date"]).strftime(
-                    '%m/%d/%Y') + "  \n 🔗" + "https://apps.iee.ihu.gr/announcements/announcement/" +
+                    '%d/%m/%Y') + "  \n 🔗" + "https://apps.iee.ihu.gr/announcements/announcement/" +
                 temp[i][
                     "id"])
         return []
@@ -233,13 +234,16 @@ class ActionAnnouncementPerCat(Action):
 
                 dispatcher.utter_message(
                     temp[i]["publisher"] + "  \n" + dateutil.parser.parse(temp[i]["date"]).strftime(
-                        '%m/%d/%Y') + "   \n " + format(
+                        '%d/%m/%Y') + "   \n " + format(
                         temp[i]["title"]) + "  \n 🔗" + "https://apps.iee.ihu.gr/announcements/announcement/" +
                     temp[i][
                         "id"])
         else:
             print("No category id")
-        return []
+
+        tracker.slots["category_id"] = None
+        print(tracker.slots["category_id"])
+        return [SlotSet("category_id", None)]
 
 
 class ActionCourses(Action):

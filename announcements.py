@@ -58,7 +58,7 @@ def announcements_category(category_id):
     headers["Content-Type"] = "application/json"
     resp = requests.get(url, headers=headers)
     data = resp.json()
-    lmt = slice(10)
+    lmt = slice(5)
     data = data[lmt]
 
     #print(data[lmt])
